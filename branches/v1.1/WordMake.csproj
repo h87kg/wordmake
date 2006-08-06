@@ -140,7 +140,6 @@
     <None Include="Resources\wordmake.png" />
     <None Include="wordmake128128.ico" />
     <None Include="app.config" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="Resources\Underline.png" />
     <None Include="Resources\Offset.png" />
     <None Include="Resources\LiftArrow2HS.png" />
