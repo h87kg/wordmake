@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // 控制。更改这些属性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("WordMake")]
-[assembly: AssemblyDescription("本软件用于提取各种字体的点阵表示\n目前是第一个版本\n如果大家使用中发现不足与bug，请与我连系\nEmail:wuhelong@gmail.com。\n可以连接到\nhttp://wuhelong.googlepages.com\n察看是否有较新版本。\n谢谢")]
+[assembly: AssemblyDescription("本软件用于提取各种字体的点阵表示\n如果大家使用中发现不足与bug，请与我连系\nEmail:wuhelong@gmail.com。\n可以连接到\nhttp://code.google.com/p/wordmake/\n察看是否有较新版本。\n谢谢")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Green Light")]
 [assembly: AssemblyProduct("WordMake")]
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      内部版本号
 //      修订号
 //
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.0.1")]
+[assembly: AssemblyFileVersion("1.0.0.1")]

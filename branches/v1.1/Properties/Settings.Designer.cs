@@ -121,7 +121,7 @@ namespace WordMake.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\t[] ={")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\t[] ={\r\n")]
         public string 段标识 {
             get {
                 return ((string)(this["段标识"]));
