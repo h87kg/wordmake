@@ -136,6 +136,7 @@
     <Content Include="c.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="说明.txt" />
     <None Include="Resources\wordmake.ico" />
     <None Include="Resources\wordmake.png" />
     <None Include="wordmake128128.ico" />
