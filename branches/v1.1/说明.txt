@@ -13,3 +13,6 @@
 使用需要Microsoft .NET Framework v2.0
 http://wuhelong.googlepages.com/wm.JPG/wm-full.jpg
 http://wuhelong.googlepages.com/WordMake.rar
+1.0.0.2
+修正字体输入框不能输入字体名的问题
+修正设置中选择0填充后出现的问题
