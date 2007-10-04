@@ -32,8 +32,6 @@ namespace WordMake.Forms
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-
-
 			this.richTextBox1.Clear();
 			StringBuilder strout = MakeString(this.textBoxin.Text);
 			richTextBox1.Text = strout.ToString();
@@ -781,5 +779,54 @@ namespace WordMake.Forms
 			ab.ShowDialog(this);
 			ab.Dispose();
 		}
+
+        private void 移除文件中相同字符ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Filter = "文本文件|*.txt|所有文件|*.*";
+            openFileDialog.Title = "打开文件";
+
+            if (openFileDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                saveFileDialog.Title = "保存输出文件到...";
+                saveFileDialog.Filter = openFileDialog.Filter;
+                if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    StreamReader sReader = new StreamReader(openFileDialog.FileName);
+                    string ins = sReader.ReadToEnd();
+                    StringBuilder so = new StringBuilder();
+                    sReader.Close();
+                    StreamWriter sWriter = new StreamWriter(saveFileDialog.FileName);
+                    int i = 0;
+                    int c = ins.Length;
+                    while (i<c)
+                    {
+                        char rc = ins[i++];
+                        int io = 0;
+                        int ioc = so.Length;
+                        bool nomach = true;
+                        while (io < ioc)
+                        {
+                            if (rc == so[io++])
+                            {
+                                nomach = false;
+                                break;
+                            }
+                        }
+                        if (nomach)
+                        {
+                            so.Append(rc);
+                        }
+                    }
+                    sWriter.Write(so.ToString());
+                    sWriter.Close();
+                }
+            }
+        }
+
+        private void 自动生成ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IndexMode im = new IndexMode();
+            im.Show();
+        }
 	}
 }

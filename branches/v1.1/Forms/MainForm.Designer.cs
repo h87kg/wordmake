@@ -53,6 +53,7 @@ namespace WordMake.Forms
             this.选项ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.字体ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.工具TToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.移除文件中相同字符ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.批量生成ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.生成字符集ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gB2312ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,6 +86,7 @@ namespace WordMake.Forms
             this.toolStripTextBox左右偏移 = new System.Windows.Forms.ToolStripTextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.自动生成ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -323,16 +325,25 @@ namespace WordMake.Forms
             // 工具TToolStripMenuItem
             // 
             this.工具TToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.移除文件中相同字符ToolStripMenuItem,
             this.批量生成ToolStripMenuItem,
-            this.生成字符集ToolStripMenuItem});
+            this.生成字符集ToolStripMenuItem,
+            this.自动生成ToolStripMenuItem});
             this.工具TToolStripMenuItem.Name = "工具TToolStripMenuItem";
             this.工具TToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.工具TToolStripMenuItem.Text = "工具(&T)";
             // 
+            // 移除文件中相同字符ToolStripMenuItem
+            // 
+            this.移除文件中相同字符ToolStripMenuItem.Name = "移除文件中相同字符ToolStripMenuItem";
+            this.移除文件中相同字符ToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.移除文件中相同字符ToolStripMenuItem.Text = "移除文件中相同字符..";
+            this.移除文件中相同字符ToolStripMenuItem.Click += new System.EventHandler(this.移除文件中相同字符ToolStripMenuItem_Click);
+            // 
             // 批量生成ToolStripMenuItem
             // 
             this.批量生成ToolStripMenuItem.Name = "批量生成ToolStripMenuItem";
-            this.批量生成ToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.批量生成ToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.批量生成ToolStripMenuItem.Text = "批量生成...";
             this.批量生成ToolStripMenuItem.Click += new System.EventHandler(this.批量生成ToolStripMenuItem_Click);
             // 
@@ -342,7 +353,7 @@ namespace WordMake.Forms
             this.gB2312ToolStripMenuItem,
             this.aSCIIToolStripMenuItem});
             this.生成字符集ToolStripMenuItem.Name = "生成字符集ToolStripMenuItem";
-            this.生成字符集ToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.生成字符集ToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.生成字符集ToolStripMenuItem.Text = "生成字符集文本";
             // 
             // gB2312ToolStripMenuItem
@@ -353,7 +364,7 @@ namespace WordMake.Forms
             this.二级简码ToolStripMenuItem,
             this.高级ToolStripMenuItem});
             this.gB2312ToolStripMenuItem.Name = "gB2312ToolStripMenuItem";
-            this.gB2312ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gB2312ToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.gB2312ToolStripMenuItem.Text = "GB2312";
             // 
             // toolStripMenuItemGB2312All
@@ -413,13 +424,13 @@ namespace WordMake.Forms
             this.aSCIIToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ASCII全部ToolStripMenuItem});
             this.aSCIIToolStripMenuItem.Name = "aSCIIToolStripMenuItem";
-            this.aSCIIToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aSCIIToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.aSCIIToolStripMenuItem.Text = "ASCII";
             // 
             // ASCII全部ToolStripMenuItem
             // 
             this.ASCII全部ToolStripMenuItem.Name = "ASCII全部ToolStripMenuItem";
-            this.ASCII全部ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ASCII全部ToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
             this.ASCII全部ToolStripMenuItem.Text = "全部";
             this.ASCII全部ToolStripMenuItem.Click += new System.EventHandler(this.gB2312ToolStripMenuItem_Click);
             // 
@@ -632,6 +643,13 @@ namespace WordMake.Forms
             this.toolStripTextBox左右偏移.ToolTipText = "编辑左右偏移";
             this.toolStripTextBox左右偏移.TextChanged += new System.EventHandler(this.toolStripTextBox偏移_TextChanged);
             // 
+            // 自动生成ToolStripMenuItem
+            // 
+            this.自动生成ToolStripMenuItem.Name = "自动生成ToolStripMenuItem";
+            this.自动生成ToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.自动生成ToolStripMenuItem.Text = "自动生成..";
+            this.自动生成ToolStripMenuItem.Click += new System.EventHandler(this.自动生成ToolStripMenuItem_Click);
+            // 
             // WordMakeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -719,6 +737,8 @@ namespace WordMake.Forms
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem aSCIIToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ASCII全部ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 移除文件中相同字符ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 自动生成ToolStripMenuItem;
     }
 }
 
