@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using WordMake.Forms;
 
 namespace WordMake
 {
     static class Program
     {
+       public static  WordMakeForm WordMakeForm;
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
@@ -14,7 +16,8 @@ namespace WordMake
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Forms.WordMakeForm());
+            WordMakeForm = new Forms.WordMakeForm();
+            Application.Run(WordMakeForm);
         }
     }
 }
