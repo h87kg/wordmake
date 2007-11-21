@@ -291,9 +291,257 @@ namespace WordMake.Forms
 			}
 			finally
 			{
-				charMake.Dispose();
+				//charMake.Dispose();
 			}
 		}
+        public void ConversionWordBoard(WordBoard drwaBoard, TextWriter OUT)
+        {
+            if (drwaBoard.DrawData == null)
+                return;
+           // WordBoard drwaBoard = wordBoard.Clone();
+            Settings defs = Settings.Default;
+
+            try
+            {
+                //初始换行参数
+                int perRow;
+                //行头
+                string rowh = "";
+                //行尾
+                string rows = "";
+                IniConversionRow(out perRow, ref rowh, ref rows);
+                //
+                int x = 0, y = 0;
+                int iniX = 0, iniY = 0;
+                int xSetp = 1, ySetp = 1;
+                int Iwidth = drwaBoard.ModeWidth - 1;
+                int Iheight = drwaBoard.ModeHeight - 1;
+                //int bitCount = this.wordBoard1.BitCount;
+                //输出字节顺序
+                bool round = defs.输出字节顺序高位在前;//Option.HSB;
+                //水平扫描顺序
+                //if (!Option.LeftToRight)
+                if (!defs.水平扫描从左到右)
+                {
+                    iniX = x = Iwidth;
+                    xSetp = -1;
+                }
+                //竖直扫描顺序
+                //if (!Option.TopToBottom)
+                if (!defs.竖直扫描从上到下)
+                {
+                    iniY = y = Iheight;
+                    ySetp = -1;
+                }
+                //string
+                bool FX = defs.数据格式十六进制;
+                int dataL = 3;
+                string FormatString;
+                if (defs.数据格式十六进制)
+                {
+                    FormatString = "X";
+                    dataL = 2;
+                }
+                else
+                {
+                    FormatString = "D";
+                }
+                string DataHead = defs.数据头;///Option.DataHead;
+                string DataCauda = defs.数据尾;// Option.DataCauda;
+                //string DataEndCauda = defs.段尾数据尾;// Option.DataEndCauda;
+                string SegmentHead = defs.段头;//Option.SegmentHead;
+                string SegmentCauda = defs.段尾;//Option.SegmentCauda;
+                string CommentHead = defs.注解头;//Option.CommentHead;
+                string CommentCauda = defs.注解尾;//Option.CommentCauda;
+                string SegmentName = defs.段标识;//Option.SegmentName;
+                //int DataCaudaLength = -DataCauda.Length;
+                bool AddSegmentID = defs.添加段唯一标识;//Option.AddSegmentId;
+                bool HorizontalScan = defs.扫描线方向水平;//Option.HorizontalScan;
+                bool FillScan = defs.扫描线非整字节的用位０填充;//Option.FillScan;
+                //string formats = Option.DataHead + Option.FormatString + Option.DataCauda + "\t";
+                OUT.WriteLine(defs.文件头);//Option.FileHead);
+
+                OUT.Write(SegmentHead);
+
+                OUT.Write(SegmentName);
+                int count = drwaBoard.BitCount;
+
+                int data = 0;
+                byte bit = 0;
+
+                int rowc = perRow;
+                OUT.Write(rowh);
+                while ((count--) > 0)
+                {
+
+                    if (round)
+                    {
+                        data = data << 1;
+                        if (drwaBoard[x, y])
+                        {
+                            data++;
+                        }
+                    }
+                    else
+                    {
+                        data = data >> 1;
+                        if (drwaBoard[x, y])
+                        {
+                            data |= 128;
+                        }
+                    }
+                    bit++;
+                    if (bit == 8)
+                    {
+
+                        bit = 0;
+                        OUT.Write(DataHead);
+                        OUT.Write(data.ToString(FormatString).PadLeft(dataL, '0'));
+                        //分行
+                        rowc--;
+                        if (count > 0)
+                        {
+                            if (rowc == 0)
+                            {
+                                OUT.WriteLine(rows);
+                                OUT.Write(rowh);
+                                rowc = perRow;
+                            }
+                            //分行
+                            else
+                            {
+                                OUT.Write(DataCauda);
+                            }
+                        }
+                        data = 0;
+                    }
+                    if (HorizontalScan)
+                    {
+                        x += xSetp;
+                        if (x < 0 || x > Iwidth)
+                        {
+                            if (FillScan)
+                            {
+                                if (bit != 0)
+                                {
+
+                                    if (round)
+                                    {
+                                        data = data << (8 - bit);
+                                    }
+                                    else
+                                    {
+                                        data = data >> (8 - bit);
+                                    }
+                                    OUT.Write(DataHead);
+
+                                    OUT.Write(data.ToString(FormatString).PadLeft(dataL, '0'));
+                                    //OUT.Write(DataCauda);
+                                    //strout.Append("\t");
+                                    data = 0;
+                                    bit = 0;
+                                    //分行
+                                    rowc--;
+                                    if (count > 0)
+                                    {
+                                        if (rowc == 0)
+                                        {
+                                            OUT.WriteLine(rows);
+                                            OUT.Write(rowh);
+                                            rowc = perRow;
+                                        }
+                                        //分行
+                                        else
+                                        {
+                                            OUT.Write(DataCauda);
+                                        }
+                                    }
+                                }
+                            }
+                            x = iniX;
+                            y += ySetp;
+                            if (y < 0 || y > Iheight)
+                            {
+                                y = iniY;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        y += ySetp;
+                        if (y < 0 || y > Iheight)
+                        {
+                            if (FillScan)
+                            {
+                                if (bit != 0)
+                                {
+
+                                    if (round)
+                                    {
+                                        data = data << (8 - bit);
+                                    }
+                                    else
+                                    {
+                                        data = data >> (8 - bit);
+                                    }
+                                    OUT.Write(DataHead);
+                                    OUT.Write(data.ToString(FormatString).PadLeft(dataL, '0'));
+                                    //分行
+                                    rowc--;
+                                    if (count > 0)
+                                    {
+                                        if (rowc == 0)
+                                        {
+                                            OUT.WriteLine(rows);
+                                            OUT.Write(rowh);
+                                            rowc = perRow;
+                                        }
+                                        //分行
+                                        else
+                                        {
+                                            OUT.Write(DataCauda);
+                                        }
+                                    }
+                                    //分行
+                                    data = 0;
+                                    bit = 0;
+                                }
+                            }
+                            y = iniY;
+                            x += xSetp;
+                            if (x < 0 || x > Iwidth)
+                            {
+                                x = iniX;
+                            }
+                        }
+                    }
+                }
+                if (bit != 0)
+                {
+                    if (round)
+                    {
+                        data = data << (8 - bit);
+                    }
+                    else
+                    {
+                        data = data >> (8 - bit);
+                    }
+                    OUT.Write(DataHead);
+                    OUT.Write(data.ToString(FormatString).PadLeft(dataL, '0'));
+                    //OUT.Write(DataCauda);
+                    //strout.Append("\t");
+                }
+                //OUT.BaseStream.Seek(DataCaudaLength,SeekOrigin.Current);
+                //OUT.Write(DataEndCauda);
+                OUT.WriteLine(SegmentCauda);
+                //      TimeSpan times = DateTime.Now - time;
+                OUT.WriteLine(defs.文件尾);//Option.FileCauda);
+            }
+            finally
+            {
+                //drwaBoard.Dispose();
+            }
+        }
 
 		private static void IniConversionRow(out int perRow, ref string rowh, ref string rows)
 		{
@@ -326,7 +574,14 @@ namespace WordMake.Forms
 			OUT.Dispose();
 			return strout;
 		}
-
+        public StringBuilder MakeWordBoard(WordBoard drwaBoard)
+        {
+            StringBuilder strout = new StringBuilder();
+            StringWriter OUT = new StringWriter(strout);
+            ConversionWordBoard(drwaBoard,OUT);
+            OUT.Dispose();
+            return strout;
+        }
 		string[] fontName;
 		private void WordMakeForm_Load(object sender, EventArgs e)
 		{
@@ -827,6 +1082,12 @@ namespace WordMake.Forms
         {
             IndexMode im = new IndexMode();
             im.Show();
+        }
+
+        private void 画图板ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DrawBoard db = new DrawBoard();
+            db.Show();
         }
 	}
 }

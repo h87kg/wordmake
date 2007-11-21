@@ -66,6 +66,7 @@ namespace WordMake.Forms
             this.确定ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aSCIIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ASCII全部ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.自动生成ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripComboBoxMultiple = new System.Windows.Forms.ToolStripComboBox();
@@ -86,7 +87,7 @@ namespace WordMake.Forms
             this.toolStripTextBox左右偏移 = new System.Windows.Forms.ToolStripTextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.自动生成ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.画图板ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -328,7 +329,8 @@ namespace WordMake.Forms
             this.移除文件中相同字符ToolStripMenuItem,
             this.批量生成ToolStripMenuItem,
             this.生成字符集ToolStripMenuItem,
-            this.自动生成ToolStripMenuItem});
+            this.自动生成ToolStripMenuItem,
+            this.画图板ToolStripMenuItem});
             this.工具TToolStripMenuItem.Name = "工具TToolStripMenuItem";
             this.工具TToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.工具TToolStripMenuItem.Text = "工具(&T)";
@@ -433,6 +435,13 @@ namespace WordMake.Forms
             this.ASCII全部ToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
             this.ASCII全部ToolStripMenuItem.Text = "全部";
             this.ASCII全部ToolStripMenuItem.Click += new System.EventHandler(this.gB2312ToolStripMenuItem_Click);
+            // 
+            // 自动生成ToolStripMenuItem
+            // 
+            this.自动生成ToolStripMenuItem.Name = "自动生成ToolStripMenuItem";
+            this.自动生成ToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.自动生成ToolStripMenuItem.Text = "自动生成..";
+            this.自动生成ToolStripMenuItem.Click += new System.EventHandler(this.自动生成ToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -643,12 +652,12 @@ namespace WordMake.Forms
             this.toolStripTextBox左右偏移.ToolTipText = "编辑左右偏移";
             this.toolStripTextBox左右偏移.TextChanged += new System.EventHandler(this.toolStripTextBox偏移_TextChanged);
             // 
-            // 自动生成ToolStripMenuItem
+            // 画图板ToolStripMenuItem
             // 
-            this.自动生成ToolStripMenuItem.Name = "自动生成ToolStripMenuItem";
-            this.自动生成ToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.自动生成ToolStripMenuItem.Text = "自动生成..";
-            this.自动生成ToolStripMenuItem.Click += new System.EventHandler(this.自动生成ToolStripMenuItem_Click);
+            this.画图板ToolStripMenuItem.Name = "画图板ToolStripMenuItem";
+            this.画图板ToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.画图板ToolStripMenuItem.Text = "画图板";
+            this.画图板ToolStripMenuItem.Click += new System.EventHandler(this.画图板ToolStripMenuItem_Click);
             // 
             // WordMakeForm
             // 
@@ -739,6 +748,7 @@ namespace WordMake.Forms
         private System.Windows.Forms.ToolStripMenuItem ASCII全部ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 移除文件中相同字符ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 自动生成ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 画图板ToolStripMenuItem;
     }
 }
 
