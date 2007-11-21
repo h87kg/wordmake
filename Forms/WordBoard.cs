@@ -12,7 +12,7 @@ using System.Threading;
 namespace WordMake.Forms
 {
     public partial class WordBoard : Control
-    { 
+    {
         private static readonly Color fC = Color.FromArgb(0, 0, 0);
         private static readonly Color bC = Color.FromArgb(255, 255, 255);
         private static readonly int bCi = bC.ToArgb();
@@ -25,18 +25,24 @@ namespace WordMake.Forms
         private Point charLocation;
         private PointF charOffset;
         private bool autoFontSize = true;
-        //private bool refreshBitmap = true;
+        private bool enableDraw = false;
 
         private int multiple = 5;
         private int width = 16;
-        private int height = 16;     
+        private int height = 16;
         private int working = 1;
 
         StringFormat stringFormat;
-        private Brush fbrush = new SolidBrush(fC);  
-        private Bitmap bitmap,showBitmap;
+        private Brush fbrush = new SolidBrush(fC);
+        private Bitmap bitmap, showBitmap;
         private Graphics g;
-        private Font font; 
+        private Font font;
+        private BitArray drawData;
+        public BitArray DrawData
+        {
+            get { return drawData; }
+            set { drawData = value; }
+        }
 
         public WordBoard()
         {
@@ -50,7 +56,82 @@ namespace WordMake.Forms
             InitializeComponent();
             oldSize = Size;
         }
+        public bool EnableDraw
+        {
+            get
+            {
+                return enableDraw;
+            }
+            set
+            {
+                if (enableDraw != value)
+                {
+                    enableDraw = value;
+                    if (enableDraw)
+                        drawData = new BitArray(latticeSize.Width * latticeSize.Height);
+                    else
+                        drawData = null;
+                }
+              
 
+            }
+        }
+        bool MouseDownColor;
+     /// <summary>
+     /// 
+     /// </summary>
+     /// <param name="p"></param>
+     /// <param name="dat"></param>
+        void setDrawData(Point p,bool dat)
+        {
+            if (enableDraw)
+            {
+                Rectangle r = new Rectangle(0, 0, latticeSize.Width * multiple, latticeSize.Height * multiple);
+
+                if (r.Contains(p))
+                {
+                    int index = (p.X / multiple) + (p.Y / multiple) * latticeSize.Width;
+                    drawData[index] = dat;
+                    if (working > 0)
+                    {
+                        redrawShowBitmap();
+                        this.Refresh();
+                    }
+                }
+            }
+        }
+        bool getDrawData(Point p)
+        {
+            if (enableDraw)
+            {
+                Rectangle r = new Rectangle(0, 0, latticeSize.Width * multiple, latticeSize.Height * multiple);
+
+                if (r.Contains(p))
+                {
+                    int index = (p.X / multiple) + (p.Y / multiple) * latticeSize.Width;
+                    return drawData[index];
+                }
+            }
+            return false;
+        }
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            MouseDownColor = getDrawData(e.Location);
+            base.OnMouseDown(e);
+        }
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                setDrawData(e.Location, !MouseDownColor);
+            }
+            base.OnMouseMove(e);
+        }
+        protected override void OnMouseClick(MouseEventArgs e)
+        {
+            setDrawData(e.Location, !MouseDownColor);
+            base.OnMouseClick(e);
+        }
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.DrawImageUnscaled(showBitmap, 0, 0);
@@ -84,13 +165,9 @@ namespace WordMake.Forms
             mapg.Dispose();
             rectBitmap.Dispose();
             g.SmoothingMode = SmoothingMode.HighSpeed;
-            for (int istr = 0; istr < this.Text.Length; istr++)
+            if (enableDraw)
             {
-                if (!DisplayRectangle.Contains(fr.Location))
-                {
-                    break;
-                }
-                BitArray bita = this.GetCharMap(this.Text[istr]);
+                BitArray bita = drawData;
                 for (int i = 0; i < h; i++)
                 {
                     for (int k = 0; k < w; k++)
@@ -113,6 +190,39 @@ namespace WordMake.Forms
                 }
                 Bdr.Location = fr.Location;
                 ib = 0;
+            }
+            else
+            {
+                for (int istr = 0; istr < this.Text.Length; istr++)
+                {
+                    if (!DisplayRectangle.Contains(fr.Location))
+                    {
+                        break;
+                    }
+                    BitArray bita = this.GetCharMap(this.Text[istr]);
+                    for (int i = 0; i < h; i++)
+                    {
+                        for (int k = 0; k < w; k++)
+                        {
+                            if (bita[ib++])
+                            {
+                                g.FillRectangle(Fbrush, Bdr);
+                            }
+                            Bdr.X += multiple;
+                        }
+                        Bdr.X -= w * multiple;
+                        Bdr.Y += multiple;
+                    }
+                    g.DrawRectangle(fp, fr);
+                    fr.X = fr.Right;
+                    if (!DisplayRectangle.Contains(new Point(fr.Right, fr.Y)))
+                    {
+                        fr.X = 0;
+                        fr.Y = fr.Bottom;
+                    }
+                    Bdr.Location = fr.Location;
+                    ib = 0;
+                }
             }
             fp.Dispose();
             Fbrush.Dispose();
@@ -200,22 +310,27 @@ namespace WordMake.Forms
                     latticeSize = value;
                     this.width = latticeSize.Width;
                     this.height = latticeSize.Height;
-                    
-               
-                if (LatticeSizeChanged != null)
-                {
-                    LatticeSizeChanged(this, EventArgs.Empty);
-                }
+                    if(enableDraw)
+                        drawData = new BitArray(latticeSize.Width * latticeSize.Height);
+                    if (LatticeSizeChanged != null)
+                    {
+                        LatticeSizeChanged(this, EventArgs.Empty);
+                    }
                     Ini();
-                if (working > 0)
-                {
-                    redrawShowBitmap();
-                    this.Refresh();
-                } 
+                    if (working > 0)
+                    {
+                        redrawShowBitmap();
+                        this.Refresh();
+                    }
                 }
             }
         }
-
+        public void ReDraw()
+        {
+                redrawShowBitmap();
+                this.Refresh();
+            
+        }
         [DefaultValueAttribute(typeof(Color), "255,0,0")]
         [DescriptionAttribute("设置背景lcd颜色")]
         [BrowsableAttribute(true)]
@@ -254,7 +369,7 @@ namespace WordMake.Forms
                 if (frameColor != value)
                 {
                     frameColor = value;
-                    
+
                     if (working > 0)
                     {
                         redrawShowBitmap();
@@ -293,7 +408,7 @@ namespace WordMake.Forms
                         }
                     }
 
-                    
+
                 }
             }
         }
@@ -473,7 +588,7 @@ namespace WordMake.Forms
             }
             sf.Dispose();
             DrawChar();
-            
+
         }
 
         /// <summary>
@@ -518,18 +633,18 @@ namespace WordMake.Forms
                 }
                 //catch (Exception ee)
                 {
-                   // MessageBox.Show(this, ee.Message+Thread.CurrentThread.Name);
+                    // MessageBox.Show(this, ee.Message+Thread.CurrentThread.Name);
                 }
             }
 
         }
         public void SetChar(char value)
         {
-                if (@char != value)
-                {
-                    this.@char = value;
-                    DrawChar();
-                }
+            if (@char != value)
+            {
+                this.@char = value;
+                DrawChar();
+            }
         }
         /// <summary>
         /// 获取字符的点阵表示指定点的值。由左至右，由上至下的方式扫描。第一个像素(对应字符的左上角)由CharMake[0,0]表示
@@ -541,7 +656,10 @@ namespace WordMake.Forms
         {
             get
             {
-                return (bitmap.GetPixel(x, y).ToArgb() != bCi);
+                if (enableDraw)
+                   return  drawData[y * width + x];
+                else
+                    return (bitmap.GetPixel(x, y).ToArgb() != bCi);
             }
         }
         /// <summary>
@@ -605,7 +723,7 @@ namespace WordMake.Forms
         /// <param name="e">包含事件数据的 <see cref="T:System.EventArgs"></see>。</param>
         protected override void OnSizeChanged(System.EventArgs e)
         {
-            if (oldSize.Width < Size.Width||oldSize.Height<Size.Height)
+            if (oldSize.Width < Size.Width || oldSize.Height < Size.Height)
             {
                 if (showBitmap != null)
                 {
@@ -627,7 +745,5 @@ namespace WordMake.Forms
             }
             oldSize = Size;
         }
-
-        //       }
     }
 }
