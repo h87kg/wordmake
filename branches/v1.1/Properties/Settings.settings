@@ -90,5 +90,14 @@
     <Setting Name="主窗口位置" Type="System.Drawing.Point" Scope="User">
       <Value Profile="(Default)">8, 8</Value>
     </Setting>
+    <Setting Name="自动生成段头" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{</Value>
+    </Setting>
+    <Setting Name="自动生成段尾" Type="System.String" Scope="User">
+      <Value Profile="(Default)">};</Value>
+    </Setting>
+    <Setting Name="自动模式输出索引偏移" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

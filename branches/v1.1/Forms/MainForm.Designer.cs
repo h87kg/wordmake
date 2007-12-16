@@ -67,6 +67,7 @@ namespace WordMake.Forms
             this.aSCIIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ASCII全部ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.自动生成ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.画图板ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripComboBoxMultiple = new System.Windows.Forms.ToolStripComboBox();
@@ -87,7 +88,6 @@ namespace WordMake.Forms
             this.toolStripTextBox左右偏移 = new System.Windows.Forms.ToolStripTextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.画图板ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -226,6 +226,8 @@ namespace WordMake.Forms
             this.wordBoard.DataBindings.Add(new System.Windows.Forms.Binding("LcdColor", global::WordMake.Properties.Settings.Default, "未点亮区域LCD颜色", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.wordBoard.DataBindings.Add(new System.Windows.Forms.Binding("FrameColor", global::WordMake.Properties.Settings.Default, "字符线框颜色", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.wordBoard.Dock = System.Windows.Forms.DockStyle.Top;
+            this.wordBoard.DrawData = null;
+            this.wordBoard.EnableDraw = false;
             this.wordBoard.Font = global::WordMake.Properties.Settings.Default.字体;
             this.wordBoard.ForeColor = global::WordMake.Properties.Settings.Default.已点亮区域LCD颜色;
             this.wordBoard.FrameColor = global::WordMake.Properties.Settings.Default.字符线框颜色;
@@ -256,7 +258,7 @@ namespace WordMake.Forms
             this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(3, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(340, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(248, 24);
             this.menuStrip1.Stretch = false;
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
@@ -442,6 +444,13 @@ namespace WordMake.Forms
             this.自动生成ToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.自动生成ToolStripMenuItem.Text = "自动生成..";
             this.自动生成ToolStripMenuItem.Click += new System.EventHandler(this.自动生成ToolStripMenuItem_Click);
+            // 
+            // 画图板ToolStripMenuItem
+            // 
+            this.画图板ToolStripMenuItem.Name = "画图板ToolStripMenuItem";
+            this.画图板ToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.画图板ToolStripMenuItem.Text = "画图板";
+            this.画图板ToolStripMenuItem.Click += new System.EventHandler(this.画图板ToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -651,13 +660,6 @@ namespace WordMake.Forms
             this.toolStripTextBox左右偏移.Size = new System.Drawing.Size(100, 21);
             this.toolStripTextBox左右偏移.ToolTipText = "编辑左右偏移";
             this.toolStripTextBox左右偏移.TextChanged += new System.EventHandler(this.toolStripTextBox偏移_TextChanged);
-            // 
-            // 画图板ToolStripMenuItem
-            // 
-            this.画图板ToolStripMenuItem.Name = "画图板ToolStripMenuItem";
-            this.画图板ToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.画图板ToolStripMenuItem.Text = "画图板";
-            this.画图板ToolStripMenuItem.Click += new System.EventHandler(this.画图板ToolStripMenuItem_Click);
             // 
             // WordMakeForm
             // 
