@@ -1046,7 +1046,7 @@ namespace WordMake.Forms
                 saveFileDialog.Filter = openFileDialog.Filter;
                 if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
                 {
-                    StreamReader sReader = new StreamReader(openFileDialog.FileName);
+                    StreamReader sReader = new StreamReader(openFileDialog.FileName,true);
                     string ins = sReader.ReadToEnd();
                     StringBuilder so = new StringBuilder();
                     sReader.Close();
