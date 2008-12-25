@@ -44,10 +44,13 @@
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.label4 = new System.Windows.Forms.Label();
+            this.checkBoxSegmentID = new System.Windows.Forms.CheckBox();
+            this.textBoxSegmentName = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBoxSegmentC = new System.Windows.Forms.TextBox();
             this.textBoxSegmentH = new System.Windows.Forms.TextBox();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -243,6 +246,9 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.checkBoxSegmentID);
+            this.groupBox5.Controls.Add(this.label4);
+            this.groupBox5.Controls.Add(this.textBoxSegmentName);
             this.groupBox5.Controls.Add(this.label1);
             this.groupBox5.Controls.Add(this.textBox1);
             this.groupBox5.Controls.Add(this.label2);
@@ -261,26 +267,16 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(371, 14);
+            this.label1.Location = new System.Drawing.Point(537, 17);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 12);
             this.label1.TabIndex = 36;
             this.label1.Text = "输出索引偏移：";
             // 
-            // textBox1
-            // 
-            this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::WordMake.Properties.Settings.Default, "自动模式输出索引偏移", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.textBox1.Location = new System.Drawing.Point(466, 11);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(131, 21);
-            this.textBox1.TabIndex = 35;
-            this.textBox1.Text = global::WordMake.Properties.Settings.Default.自动模式输出索引偏移;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 14);
+            this.label2.Location = new System.Drawing.Point(10, 17);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 12);
             this.label2.TabIndex = 31;
@@ -289,7 +285,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(182, 14);
+            this.label3.Location = new System.Drawing.Point(423, 17);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(41, 12);
             this.label3.TabIndex = 34;
@@ -299,19 +295,60 @@
             // 
             this.errorProvider.ContainerControl = this;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(297, 17);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 12);
+            this.label4.TabIndex = 38;
+            this.label4.Text = "段标识：";
+            // 
+            // checkBoxSegmentID
+            // 
+            this.checkBoxSegmentID.AutoSize = true;
+            this.checkBoxSegmentID.Checked = global::WordMake.Properties.Settings.Default.IM添加段唯一标识;
+            this.checkBoxSegmentID.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxSegmentID.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::WordMake.Properties.Settings.Default, "IM添加段唯一标识", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBoxSegmentID.Location = new System.Drawing.Point(183, 15);
+            this.checkBoxSegmentID.Name = "checkBoxSegmentID";
+            this.checkBoxSegmentID.Size = new System.Drawing.Size(108, 16);
+            this.checkBoxSegmentID.TabIndex = 39;
+            this.checkBoxSegmentID.Text = "添加段唯一标识";
+            this.checkBoxSegmentID.UseVisualStyleBackColor = true;
+            // 
+            // textBoxSegmentName
+            // 
+            this.textBoxSegmentName.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::WordMake.Properties.Settings.Default, "IM段标识", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.textBoxSegmentName.Location = new System.Drawing.Point(356, 13);
+            this.textBoxSegmentName.Name = "textBoxSegmentName";
+            this.textBoxSegmentName.Size = new System.Drawing.Size(61, 21);
+            this.textBoxSegmentName.TabIndex = 37;
+            this.textBoxSegmentName.Text = global::WordMake.Properties.Settings.Default.IM段标识;
+            // 
+            // textBox1
+            // 
+            this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::WordMake.Properties.Settings.Default, "自动模式输出索引偏移", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.textBox1.Location = new System.Drawing.Point(632, 13);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(61, 21);
+            this.textBox1.TabIndex = 35;
+            this.textBox1.Text = global::WordMake.Properties.Settings.Default.自动模式输出索引偏移;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
             // textBoxSegmentC
             // 
             this.textBoxSegmentC.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::WordMake.Properties.Settings.Default, "自动生成段尾", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.textBoxSegmentC.Location = new System.Drawing.Point(229, 11);
+            this.textBoxSegmentC.Location = new System.Drawing.Point(470, 13);
             this.textBoxSegmentC.Name = "textBoxSegmentC";
-            this.textBoxSegmentC.Size = new System.Drawing.Size(131, 21);
+            this.textBoxSegmentC.Size = new System.Drawing.Size(61, 21);
             this.textBoxSegmentC.TabIndex = 26;
             this.textBoxSegmentC.Text = global::WordMake.Properties.Settings.Default.自动生成段尾;
             // 
             // textBoxSegmentH
             // 
             this.textBoxSegmentH.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::WordMake.Properties.Settings.Default, "自动生成段头", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.textBoxSegmentH.Location = new System.Drawing.Point(56, 11);
+            this.textBoxSegmentH.Location = new System.Drawing.Point(57, 13);
             this.textBoxSegmentH.Name = "textBoxSegmentH";
             this.textBoxSegmentH.Size = new System.Drawing.Size(120, 21);
             this.textBoxSegmentH.TabIndex = 25;
@@ -372,6 +409,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBoxSegmentName;
+        private System.Windows.Forms.CheckBox checkBoxSegmentID;
 
     }
 }

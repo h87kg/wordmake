@@ -42,7 +42,6 @@ namespace WordMake.Forms
             this.复制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.全选ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxin = new System.Windows.Forms.TextBox();
-            this.wordBoard = new WordMake.Forms.WordBoard();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.文件FToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.配置文件另存为ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,6 +87,7 @@ namespace WordMake.Forms
             this.toolStripTextBox左右偏移 = new System.Windows.Forms.ToolStripTextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.wordBoard = new WordMake.Forms.WordBoard();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -212,40 +212,6 @@ namespace WordMake.Forms
             this.textBoxin.Size = new System.Drawing.Size(323, 21);
             this.textBoxin.TabIndex = 1;
             this.textBoxin.TextChanged += new System.EventHandler(this.textBoxin_TextChanged);
-            // 
-            // wordBoard
-            // 
-            this.wordBoard.AutoFontSize = global::WordMake.Properties.Settings.Default.自动字体大小;
-            this.wordBoard.CharLocation = global::WordMake.Properties.Settings.Default.字模偏移;
-            this.wordBoard.DataBindings.Add(new System.Windows.Forms.Binding("Font", global::WordMake.Properties.Settings.Default, "字体", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.wordBoard.DataBindings.Add(new System.Windows.Forms.Binding("CharLocation", global::WordMake.Properties.Settings.Default, "字模偏移", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.wordBoard.DataBindings.Add(new System.Windows.Forms.Binding("Multiple", global::WordMake.Properties.Settings.Default, "显示放大倍数", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.wordBoard.DataBindings.Add(new System.Windows.Forms.Binding("LatticeSize", global::WordMake.Properties.Settings.Default, "字模大小", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.wordBoard.DataBindings.Add(new System.Windows.Forms.Binding("AutoFontSize", global::WordMake.Properties.Settings.Default, "自动字体大小", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.wordBoard.DataBindings.Add(new System.Windows.Forms.Binding("ForeColor", global::WordMake.Properties.Settings.Default, "已点亮区域LCD颜色", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.wordBoard.DataBindings.Add(new System.Windows.Forms.Binding("LcdColor", global::WordMake.Properties.Settings.Default, "未点亮区域LCD颜色", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.wordBoard.DataBindings.Add(new System.Windows.Forms.Binding("FrameColor", global::WordMake.Properties.Settings.Default, "字符线框颜色", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.wordBoard.Dock = System.Windows.Forms.DockStyle.Top;
-            this.wordBoard.DrawData = null;
-            this.wordBoard.EnableDraw = false;
-            this.wordBoard.Font = global::WordMake.Properties.Settings.Default.字体;
-            this.wordBoard.ForeColor = global::WordMake.Properties.Settings.Default.已点亮区域LCD颜色;
-            this.wordBoard.FrameColor = global::WordMake.Properties.Settings.Default.字符线框颜色;
-            this.wordBoard.LatticeSize = global::WordMake.Properties.Settings.Default.字模大小;
-            this.wordBoard.LcdColor = global::WordMake.Properties.Settings.Default.未点亮区域LCD颜色;
-            this.wordBoard.Location = new System.Drawing.Point(0, 0);
-            this.wordBoard.ModeHeight = 12;
-            this.wordBoard.ModeWidth = 12;
-            this.wordBoard.Multiple = global::WordMake.Properties.Settings.Default.显示放大倍数;
-            this.wordBoard.Name = "wordBoard";
-            this.wordBoard.Size = new System.Drawing.Size(526, 129);
-            this.wordBoard.TabIndex = 0;
-            this.wordBoard.Text = "WordMake";
-            this.wordBoard.CharLocationChanged += new System.EventHandler(this.wordBoard_CharLocationChanged);
-            this.wordBoard.FontChanged += new System.EventHandler(this.wordBoard_FontChanged);
-            this.wordBoard.MultipleChanged += new System.EventHandler(this.toolStripComboBoxMultiple_Leave);
-            this.wordBoard.AutoFontSizeChanged += new System.EventHandler(this.wordBoard_AutoFontSizeChanged);
-            this.wordBoard.LatticeSizeChanged += new System.EventHandler(this.wordBoard_LatticeSizeChanged);
             // 
             // menuStrip1
             // 
@@ -492,9 +458,9 @@ namespace WordMake.Forms
             this.toolStripComboBoxMultiple.Name = "toolStripComboBoxMultiple";
             this.toolStripComboBoxMultiple.Size = new System.Drawing.Size(75, 25);
             this.toolStripComboBoxMultiple.ToolTipText = "显示缩放";
-            this.toolStripComboBoxMultiple.Leave += new System.EventHandler(this.toolStripComboBoxMultiple_Leave);
-            this.toolStripComboBoxMultiple.TextUpdate += new System.EventHandler(this.toolStripComboBoxMultiple_TextUpdate);
             this.toolStripComboBoxMultiple.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxMultiple_SelectedIndexChanged);
+            this.toolStripComboBoxMultiple.TextUpdate += new System.EventHandler(this.toolStripComboBoxMultiple_TextUpdate);
+            this.toolStripComboBoxMultiple.Leave += new System.EventHandler(this.toolStripComboBoxMultiple_Leave);
             this.toolStripComboBoxMultiple.Click += new System.EventHandler(this.toolStripComboBoxClearText);
             // 
             // toolStripComboBoxfont
@@ -661,6 +627,42 @@ namespace WordMake.Forms
             this.toolStripTextBox左右偏移.ToolTipText = "编辑左右偏移";
             this.toolStripTextBox左右偏移.TextChanged += new System.EventHandler(this.toolStripTextBox偏移_TextChanged);
             // 
+            // wordBoard
+            // 
+            this.wordBoard.AutoFontSize = global::WordMake.Properties.Settings.Default.自动字体大小;
+            this.wordBoard.AutoWidth = global::WordMake.Properties.Settings.Default.变宽;
+            this.wordBoard.CharLocation = global::WordMake.Properties.Settings.Default.字模偏移;
+            this.wordBoard.DataBindings.Add(new System.Windows.Forms.Binding("Font", global::WordMake.Properties.Settings.Default, "字体", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.wordBoard.DataBindings.Add(new System.Windows.Forms.Binding("CharLocation", global::WordMake.Properties.Settings.Default, "字模偏移", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.wordBoard.DataBindings.Add(new System.Windows.Forms.Binding("Multiple", global::WordMake.Properties.Settings.Default, "显示放大倍数", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.wordBoard.DataBindings.Add(new System.Windows.Forms.Binding("LatticeSize", global::WordMake.Properties.Settings.Default, "字模大小", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.wordBoard.DataBindings.Add(new System.Windows.Forms.Binding("AutoFontSize", global::WordMake.Properties.Settings.Default, "自动字体大小", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.wordBoard.DataBindings.Add(new System.Windows.Forms.Binding("ForeColor", global::WordMake.Properties.Settings.Default, "已点亮区域LCD颜色", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.wordBoard.DataBindings.Add(new System.Windows.Forms.Binding("LcdColor", global::WordMake.Properties.Settings.Default, "未点亮区域LCD颜色", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.wordBoard.DataBindings.Add(new System.Windows.Forms.Binding("FrameColor", global::WordMake.Properties.Settings.Default, "字符线框颜色", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.wordBoard.DataBindings.Add(new System.Windows.Forms.Binding("AutoWidth", global::WordMake.Properties.Settings.Default, "变宽", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.wordBoard.Dock = System.Windows.Forms.DockStyle.Top;
+            this.wordBoard.DrawData = null;
+            this.wordBoard.EnableDraw = false;
+            this.wordBoard.Font = global::WordMake.Properties.Settings.Default.字体;
+            this.wordBoard.ForeColor = global::WordMake.Properties.Settings.Default.已点亮区域LCD颜色;
+            this.wordBoard.FrameColor = global::WordMake.Properties.Settings.Default.字符线框颜色;
+            this.wordBoard.LatticeSize = global::WordMake.Properties.Settings.Default.字模大小;
+            this.wordBoard.LcdColor = global::WordMake.Properties.Settings.Default.未点亮区域LCD颜色;
+            this.wordBoard.Location = new System.Drawing.Point(0, 0);
+            this.wordBoard.ModeHeight = 12;
+            this.wordBoard.ModeWidth = 12;
+            this.wordBoard.Multiple = global::WordMake.Properties.Settings.Default.显示放大倍数;
+            this.wordBoard.Name = "wordBoard";
+            this.wordBoard.Size = new System.Drawing.Size(526, 129);
+            this.wordBoard.TabIndex = 0;
+            this.wordBoard.Text = "WordMake";
+            this.wordBoard.MultipleChanged += new System.EventHandler(this.toolStripComboBoxMultiple_Leave);
+            this.wordBoard.CharLocationChanged += new System.EventHandler(this.wordBoard_CharLocationChanged);
+            this.wordBoard.FontChanged += new System.EventHandler(this.wordBoard_FontChanged);
+            this.wordBoard.AutoFontSizeChanged += new System.EventHandler(this.wordBoard_AutoFontSizeChanged);
+            this.wordBoard.LatticeSizeChanged += new System.EventHandler(this.wordBoard_LatticeSizeChanged);
+            // 
             // WordMakeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -674,8 +676,8 @@ namespace WordMake.Forms
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "WordMakeForm";
             this.Text = "WordMake";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WordMakeForm_FormClosing);
             this.Load += new System.EventHandler(this.WordMakeForm_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WordMakeForm_FormClosing);
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
             this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();

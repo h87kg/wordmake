@@ -17,7 +17,6 @@ namespace WordMake.Forms
 		public WordMakeForm()
 		{
 			Option = new WordMakeOption(this);
-			//Settings.Default.PropertyChanged += new PropertyChangedEventHandler(Default_PropertyChanged);
 			InitializeComponent();
 		}
 		private void OptionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -50,28 +49,11 @@ namespace WordMake.Forms
 				string rows = "";
 				IniConversionRow(out perRow, ref rowh, ref rows);
 				//
-				int x = 0, y = 0;
-				int iniX = 0, iniY = 0;
-				int xSetp = 1, ySetp = 1;
-				int Iwidth = charMake.ModeWidth - 1;
-				int Iheight = charMake.ModeHeight - 1;
 				//int bitCount = this.wordBoard1.BitCount;
 				//输出字节顺序
 				bool round = defs.输出字节顺序高位在前;//Option.HSB;
-				//水平扫描顺序
-				//if (!Option.LeftToRight)
-				if (!defs.水平扫描从左到右)
-				{
-					iniX = x = Iwidth;
-					xSetp = -1;
-				}
-				//竖直扫描顺序
-				//if (!Option.TopToBottom)
-				if (!defs.竖直扫描从上到下)
-				{
-					iniY = y = Iheight;
-					ySetp = -1;
-				}
+		
+				
 				//string
 				bool FX = defs.数据格式十六进制;
 				int dataL = 3;
@@ -115,33 +97,61 @@ namespace WordMake.Forms
 					}
 					OUT.Write(SegmentName);
 					charMake.SetChar(c);
-					int count = charMake.BitCount;
-
+                    int x = 0, y = 0;
+                    int iniX = 0, iniY = 0;
+                    int xSetp = 1, ySetp = 1;
+                    int Iwidth = charMake.ModeWidth - 1;
+                    int Iheight = charMake.ModeHeight - 1;
+                    if (charMake.AutoWidth)
+                        Iwidth = charMake.WordWidth - 1;
+                    //水平扫描顺序
+                    if (!defs.水平扫描从左到右)
+                    {
+                        iniX = x = Iwidth;
+                        xSetp = -1;
+                    }
+                    //竖直扫描顺序
+                    if (!defs.竖直扫描从上到下)
+                    {
+                        iniY = y = Iheight;
+                        ySetp = -1;
+                    }
+					//int count = charMake.BitCount;
+                    int count = charMake.LatticeSize.Width * charMake.LatticeSize.Height;
 					int data = 0;
 					byte bit = 0;
+                    bool end = false;
 
 					int rowc = perRow;
 					OUT.Write(rowh);
 					while ((count--) > 0)
 					{
-
-						if (round)
-						{
-							data = data << 1;
-							if (charMake[x, y])
-							{
-								data++;
-							}
-						}
-						else
-						{
-							data = data >> 1;
-							if (charMake[x, y])
-							{
-								data |= 128;
-							}
-						}
-						bit++;
+                        //if (!end||data!=0)
+                        //{
+                            if (round)
+                            {
+                                data = data << 1;
+                                if (!end&&charMake[x, y])
+                                {
+                                    data++;
+                                }
+                            }
+                            else
+                            {
+                                data = data >> 1;
+                                if (!end && charMake[x, y])
+                                {
+                                    data |= 128;
+                                }
+                            }
+                            bit++;
+                        //}
+                        //else 
+                        //{
+                        //    bit = 8;
+                        //    count -= 7;
+                        //    data = 0;
+                        //}
 						if (bit == 8)
 						{
 
@@ -213,6 +223,26 @@ namespace WordMake.Forms
 								y += ySetp;
 								if (y < 0 || y > Iheight)
 								{
+                                    if (defs.变宽)
+                                    {
+                                        if (ySetp > 0)
+                                        {
+                                            if (y > Iheight)
+                                            {
+                                                end = true;
+                                                //goto end;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (y < 0)
+                                            {
+                                                end = true;
+                                               // goto end;
+                                            }
+                                        }
+                                    }
+                                    
 									y = iniY;
 								}
 							}
@@ -260,13 +290,33 @@ namespace WordMake.Forms
 								}
 								y = iniY;
 								x += xSetp;
-								if (x < 0 || x > Iwidth)
-								{
-									x = iniX;
-								}
+                                if (x < 0 || x > Iwidth)
+                                {
+                                    if (defs.变宽)
+                                    {
+                                        if (xSetp > 0)
+                                        {
+                                            if (x > Iwidth)
+                                            {
+                                                //goto end;
+                                                end = true;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (x < 0)
+                                            {
+                                                end = true;
+                                                //goto end;
+                                            }
+                                        }
+                                    }
+                                    x = iniX;
+                                }
 							}
 						}
-					}
+					}  
+                //end:
 					if (bit != 0)
 					{
 						if (round)
@@ -284,6 +334,25 @@ namespace WordMake.Forms
 					}
 					//OUT.BaseStream.Seek(DataCaudaLength,SeekOrigin.Current);
 					//OUT.Write(DataEndCauda);
+                    if (defs.变宽)
+                    {
+                        //if (bit != 0)
+                        //    count -= 8;
+                        //count += bit;
+                        //int tmp = count / 8;
+                        //if (count % 8 != 0)
+                        //    tmp++;
+                        //while (tmp-->0)
+                        //{
+                        //    OUT.Write(DataCauda);
+                        //    OUT.Write(DataHead);
+                        //    OUT.Write(0.ToString(FormatString).PadLeft(dataL, '0'));
+
+                        //}
+                        OUT.Write(DataCauda);
+                        OUT.Write(DataHead);
+                        OUT.Write(charMake.WordWidth.ToString(FormatString).PadLeft(dataL, '0'));
+                    }
 					OUT.WriteLine(SegmentCauda);
 					//      TimeSpan times = DateTime.Now - time;
 				}
@@ -814,7 +883,6 @@ namespace WordMake.Forms
 
 		private void WordMakeForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			// Settings.Default.显示放大倍数 = wordBoard.Multiple;
 			Settings.Default.Save();
 
 		}
