@@ -21,7 +21,7 @@ namespace WordMake.Forms
             updatIndexOffset();
             StringBuilder AllWord = new StringBuilder();
             string ins = IntputRichTextBox.Text;
-            AllWord.Remove(0, AllWord.Length);
+            //AllWord.Remove(0, AllWord.Length);
             int i = 0;
             int c = ins.Length;
             while (i < c)
@@ -67,13 +67,22 @@ namespace WordMake.Forms
                 string SegmentCauda = textBoxSegmentC.Text;//Option.SegmentCauda;
 				string CommentHead = defs.注解头;//Option.CommentHead;
 				string CommentCauda = defs.注解尾;//Option.CommentCauda;
-                //string SegmentName = defs.段标识;//Option.SegmentName;
+                string SegmentName = textBoxSegmentName.Text;//Option.SegmentName;
+                bool AddIndex = checkBoxSegmentID.Checked;
+                int sindex = 0;
             foreach (string s in IntputRichTextBox.Lines)
             {
                 indexOut.Append(SegmentHead);
+                if (AddIndex)
+                    {
+                        indexOut.Append(sindex.ToString());
+                        sindex++;
+                    }
+                indexOut.Append(SegmentName);
                 foreach (char word in s)
                 {
                     indexOut.Append(DataHead);
+                    
                     indexOut.Append((allWord.IndexOf(word) + IndexOffset).ToString(FormatString));
                     indexOut.Append(DataCauda);
                 }

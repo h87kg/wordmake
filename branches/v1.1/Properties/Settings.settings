@@ -91,13 +91,22 @@
       <Value Profile="(Default)">8, 8</Value>
     </Setting>
     <Setting Name="自动生成段头" Type="System.String" Scope="User">
-      <Value Profile="(Default)">{</Value>
+      <Value Profile="(Default)">char ss</Value>
     </Setting>
     <Setting Name="自动生成段尾" Type="System.String" Scope="User">
       <Value Profile="(Default)">};</Value>
     </Setting>
     <Setting Name="自动模式输出索引偏移" Type="System.String" Scope="User">
       <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="变宽" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="IM添加段唯一标识" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="IM段标识" Type="System.String" Scope="User">
+      <Value Profile="(Default)">[]={</Value>
     </Setting>
   </Settings>
 </SettingsFile>

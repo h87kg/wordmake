@@ -26,10 +26,11 @@ namespace WordMake.Forms
         private PointF charOffset;
         private bool autoFontSize = true;
         private bool enableDraw = false;
-
+        private bool autoWidth = false;
         private int multiple = 5;
         private int width = 16;
         private int height = 16;
+        private int wordWidth;//当前绘制的字符宽度
         private int working = 1;
 
         StringFormat stringFormat;
@@ -72,17 +73,17 @@ namespace WordMake.Forms
                     else
                         drawData = null;
                 }
-              
+
 
             }
         }
         bool MouseDownColor;
-     /// <summary>
-     /// 
-     /// </summary>
-     /// <param name="p"></param>
-     /// <param name="dat"></param>
-        void setDrawData(Point p,bool dat)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="dat"></param>
+        void setDrawData(Point p, bool dat)
         {
             if (enableDraw)
             {
@@ -200,6 +201,8 @@ namespace WordMake.Forms
                         break;
                     }
                     BitArray bita = this.GetCharMap(this.Text[istr]);
+                    if(autoWidth)
+                    w = wordWidth;
                     for (int i = 0; i < h; i++)
                     {
                         for (int k = 0; k < w; k++)
@@ -213,6 +216,7 @@ namespace WordMake.Forms
                         Bdr.X -= w * multiple;
                         Bdr.Y += multiple;
                     }
+                    fr.Width = multiple * w;
                     g.DrawRectangle(fp, fr);
                     fr.X = fr.Right;
                     if (!DisplayRectangle.Contains(new Point(fr.Right, fr.Y)))
@@ -310,7 +314,7 @@ namespace WordMake.Forms
                     latticeSize = value;
                     this.width = latticeSize.Width;
                     this.height = latticeSize.Height;
-                    if(enableDraw)
+                    if (enableDraw)
                         drawData = new BitArray(latticeSize.Width * latticeSize.Height);
                     if (LatticeSizeChanged != null)
                     {
@@ -327,9 +331,9 @@ namespace WordMake.Forms
         }
         public void ReDraw()
         {
-                redrawShowBitmap();
-                this.Refresh();
-            
+            redrawShowBitmap();
+            this.Refresh();
+
         }
         [DefaultValueAttribute(typeof(Color), "255,0,0")]
         [DescriptionAttribute("设置背景lcd颜色")]
@@ -378,7 +382,32 @@ namespace WordMake.Forms
                 }
             }
         }
-
+        [DefaultValueAttribute(true)]
+        [DescriptionAttribute("输出适合字符宽度")]
+        [BrowsableAttribute(true)]
+        [Category("Behavior")]
+        public bool AutoWidth
+        {
+            get
+            {
+                return autoWidth;
+            }
+            set
+            {
+                if (autoWidth != value)
+                {
+                    autoWidth = value;
+                    ReDraw();
+                }
+            }
+        }
+        public int WordWidth
+        {
+            get
+            {
+                return wordWidth ;
+            }
+        }
         [DefaultValueAttribute(true)]
         [DescriptionAttribute("为真将自动缩放字体以适合输出")]
         [BrowsableAttribute(true)]
@@ -457,7 +486,11 @@ namespace WordMake.Forms
         {
             get
             {
-                return height * width;
+                if (autoWidth)
+                    return height * wordWidth;
+
+                else
+                    return height * width;
             }
         }
         [DefaultValueAttribute(null)]
@@ -573,22 +606,30 @@ namespace WordMake.Forms
                     base.OnFontChanged(EventArgs.Empty);
                 }
             }
+            CountCharWidthOffset('w');
+            DrawChar();
 
+        }
+
+        private void CountCharWidthOffset(char tc)
+        {
+            string testString = new string(tc, 1);
             RectangleF re = new Rectangle(0, 0, 10000, 10000);
             StringFormat sf = new StringFormat();
-            string testString = "w";
             CharacterRange[] cr = { new CharacterRange(0, 1) };//,new CharacterRange(1,1)};
             sf.SetMeasurableCharacterRanges(cr);
             Region[] charRegions;
             charRegions = g.MeasureCharacterRanges(testString, font, re, sf);
             if (charRegions.Length > 0)
             {
-                PointF t2 = charRegions[0].GetBounds(g).Location;
+                RectangleF rf = charRegions[0].GetBounds(g);
+                PointF t2 = rf.Location;
                 charOffset = new PointF(charLocation.X - t2.X, charLocation.Y - t2.Y);
+                wordWidth = (int)rf.Width;
+                if (wordWidth > width)
+                    wordWidth = width;
             }
             sf.Dispose();
-            DrawChar();
-
         }
 
         /// <summary>
@@ -600,11 +641,16 @@ namespace WordMake.Forms
             get
             {
                 int fCi;
-                BitArray map = new BitArray(height * width, false);
+                int w = width;
+                if (autoWidth)
+                {
+                    w = wordWidth;
+                }
+                BitArray map = new BitArray(height * w, false);
                 int ib = 0;
                 for (int i = 0; i < height; i++)
                 {
-                    for (int k = 0; k < width; k++)
+                    for (int k = 0; k < w; k++)
                     {
                         fCi = bitmap.GetPixel(k, i).ToArgb();
 
@@ -628,6 +674,7 @@ namespace WordMake.Forms
                 string ds = @char.ToString();
                 //try
                 {
+                    CountCharWidthOffset(@char);
                     g.DrawString(ds, font, fbrush, charOffset, stringFormat);
 
                 }
@@ -657,7 +704,7 @@ namespace WordMake.Forms
             get
             {
                 if (enableDraw)
-                   return  drawData[y * width + x];
+                    return drawData[y * width + x];
                 else
                     return (bitmap.GetPixel(x, y).ToArgb() != bCi);
             }
@@ -717,6 +764,8 @@ namespace WordMake.Forms
             o.LcdColor = this.LcdColor;
             o.Multiple = this.Multiple;
             o.Text = this.Text;
+            o.AutoWidth = this.AutoWidth;
+            o.Ini();
             return o;
         }
 

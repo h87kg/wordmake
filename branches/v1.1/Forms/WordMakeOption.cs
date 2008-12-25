@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
+using System.Configuration;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using WordMake.Properties;
-using System.Configuration;
 
 namespace WordMake.Forms
 {
@@ -31,6 +28,20 @@ namespace WordMake.Forms
             set
             {
                 this.radioButtonLtoR.Checked = value;
+            }
+        }
+        /// <summary>
+        /// 为true时在每个字符的点阵数据后加入字符宽度信息
+        /// </summary>
+        public bool AutoWordWidth
+        {
+            get
+            {
+                return this.变宽.Checked;
+            }
+            set
+            {
+                this.变宽.Checked = value;
             }
         }
 
