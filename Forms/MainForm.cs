@@ -1265,5 +1265,11 @@ namespace WordMake.Forms
 			DrawBoard db = new DrawBoard();
 			db.Show();
 		}
+
+		private void 简谱播放器ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			NumberedMusical nm = new NumberedMusical();
+			nm.Show();
+		}
 	}
 }
