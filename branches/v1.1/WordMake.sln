@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordMake", "WordMake.csproj
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{26C2877F-EE52-45A9-9A17-E469A1C3D2C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cshnptest", "..\cshnptest\cshnptest.csproj", "{31E52ED7-BC58-44F3-BA0B-A0C0A99440BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,16 @@ Global
 		{26C2877F-EE52-45A9-9A17-E469A1C3D2C6}.Release|Any CPU.ActiveCfg = Release
 		{26C2877F-EE52-45A9-9A17-E469A1C3D2C6}.Release|Mixed Platforms.ActiveCfg = Release
 		{26C2877F-EE52-45A9-9A17-E469A1C3D2C6}.Release|Win32.ActiveCfg = Release
+		{31E52ED7-BC58-44F3-BA0B-A0C0A99440BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31E52ED7-BC58-44F3-BA0B-A0C0A99440BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31E52ED7-BC58-44F3-BA0B-A0C0A99440BE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{31E52ED7-BC58-44F3-BA0B-A0C0A99440BE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{31E52ED7-BC58-44F3-BA0B-A0C0A99440BE}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{31E52ED7-BC58-44F3-BA0B-A0C0A99440BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31E52ED7-BC58-44F3-BA0B-A0C0A99440BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31E52ED7-BC58-44F3-BA0B-A0C0A99440BE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{31E52ED7-BC58-44F3-BA0B-A0C0A99440BE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{31E52ED7-BC58-44F3-BA0B-A0C0A99440BE}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
